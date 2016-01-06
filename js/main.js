@@ -18,7 +18,7 @@ var yAxis = d3.svg.axis().scale(y)
 window.onload = function(){
 
 // Adds the svg
-var svg = d3.select("#chart")
+var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -33,10 +33,18 @@ d3.json('/data/time6.json',function(err, data){
     x.domain([0,data.jack.length]);
     y.domain(d3.extent(data.jack)).nice();
 
-    // Add the valueline path.
-    svg.selectAll('.dot')
+    // Add the Jacks times.
+    svg.selectAll('.jack')
       .data(data.jack).enter().append("circle")
-      .attr('class', 'dot jack')
+      .attr('class', 'jack')
+      .attr('r', 5)
+      .attr('cx', function(d,i){ return x(i+1) })
+      .attr('cy', function(d,i){ return y(d) })
+
+    // Add the Chris' times.
+    svg.selectAll('.chris')
+      .data(data.chris).enter().append("circle")
+      .attr('class', 'chris')
       .attr('r', 5)
       .attr('cx', function(d,i){ return x(i+1) })
       .attr('cy', function(d,i){ return y(d) })
